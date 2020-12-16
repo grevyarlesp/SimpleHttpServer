@@ -66,11 +66,8 @@ void FileManager::framing(string &location, QFileInfo &info, string &ans) {
     ans += "</tr>\n";
 }
 
-
-
 void FileManager::generate(string location, string &ans) {
     QDir dir((root + location).c_str());
-
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Name | QDir::Reversed);
     QFileInfoList list = dir.entryInfoList();

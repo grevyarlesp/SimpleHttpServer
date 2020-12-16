@@ -1,0 +1,423 @@
+body {
+  background:  #c2c2c2;
+  display: flex;
+  justify-content: space-evenly;  
+  font-family: "Ubuntu", sans-serif;
+}
+
+.profile-card-1 {
+  width: 300px;
+  height: 350px;
+  background: white;
+  margin: 0 auto;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 4px 4px 10px #999;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.profile-card-1 .view-more {
+  position: absolute;
+  top: calc(50% - .5em);
+  left: calc(50% - .5em);
+  z-index: 2;
+  color: #2ECC71;
+  font-size: 2em;
+}
+.profile-card-1 .view-more .fa-plus-circle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  width: 1.004em;
+}
+.profile-card-1 .view-more .fa-plus-circle:hover {
+  background: #2ECC71;
+  color: white;
+}
+.profile-card-1 .popup {
+  height: 500px;
+  width: 500px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.profile-card-1 .mid-section {
+  position: absolute;
+  height: 200px;
+  width: 100%;
+  top: 200px;
+  left: 0;
+  padding: 10px 20px 0;
+  box-sizing: border-box;
+  background: white;
+}
+.profile-card-1 .mid-section .name {
+  color: #333333;
+  font-size: 1.4em;
+  padding-top: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}
+.profile-card-1 .mid-section .description {
+  color: gray;
+  font-size: 0.9em;
+  padding-bottom: 5px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.profile-card-1 .mid-section .description a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+.profile-card-1 .mid-section .line {
+  background: #7ee2a8;
+  width: 80%;
+  height: 2px;
+  margin: 5px auto -3px;
+}
+.profile-card-1 .mid-section .stats {
+  display: flex;
+  position: absolute;
+  left: 10%;
+  padding-top: 10px;
+  width: 80%;
+  justify-content: space-around;
+}
+.profile-card-1 .mid-section .stats .stat {
+  font-size: 1.3em;
+  color: #333333;
+  padding: 5px;
+  font-weight: bold;
+}
+.profile-card-1 .mid-section .stats .subtext {
+  color: gray;
+  font-size: 0.6em;
+  font-weight: normal;
+}
+.profile-card-1 .img {
+  height: 130px;
+  width: 100%;
+  background-image: linear-gradient(rgba(46, 204, 113, 0.4), rgba(46, 204, 113, 0.95)), url("https://static.pexels.com/photos/21014/pexels-photo-medium.jpg");
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+.profile-card-1 .img img {
+  width: 160px;
+  height: 160px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  position: absolute;
+  left: calc(50% - 84px);
+  top: 26px;
+}
+.profile-card-1 .img:after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  left: calc(50% - 91.5px);
+  top: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+}
+.profile-card-1 .img:before {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  left: calc(50% - 95px);
+  top: 15.5px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.profile-card-1 .links {
+  width: 100%;
+  height: 50px;
+  background: #F2F2F2;
+  border-top: 1px solid #44d581;
+  margin-top: 35px;
+  border-radius: 5px;
+  color: white;
+  font-size: 2em;
+  line-height: 1.5em;
+  position: absolute;
+  bottom: 0;
+}
+.profile-card-1 .links a {
+  color: white;
+}
+.profile-card-1 .links .fb {
+  position: absolute;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  background-color: #3b5998;
+}
+.profile-card-1 .links .fb:hover {
+  background-color: #4264aa;
+}
+.profile-card-1 .links .instagram {
+  position: absolute;
+  left: 25%;
+  width: 25%;
+  height: 100%;
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+.profile-card-1 .links .instagram:hover {
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+.profile-card-1 .links .github {
+  position: absolute;
+  left: 50%;
+  width: 25%;
+  height: 100%;
+  background-color:#333333;
+}
+.profile-card-1 .links .github:hover {
+  background-color:#333333;
+}
+
+.profile-card-1 .links .google {
+  position: absolute;
+  left: 75%;
+  width: 25%;
+  height: 100%;
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-color: whitesmoke;
+}
+.profile-card-1 .links .google:hover {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-color: whitesmoke;
+}
+
+.show-info {
+  position: absolute;
+  top: 10px;
+  right:10px;
+  cursor: pointer;
+}
+.infomation-card {
+  position: absolute;
+  left: calc(100% - 50% + 160px);
+  top: 10px;
+  width: 200px;
+  height: 100px;
+  background-color: #ffffff;
+  display: none;
+}
+.show{
+  display: block;
+}
+
+.profile-card-2 {
+  width: 300px;
+  height: 350px;
+  background: white;
+  margin: 0 auto;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 4px 4px 10px #999;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.profile-card-2 .view-more {
+  position: absolute;
+  top: calc(50% - .5em);
+  left: calc(50% - .5em);
+  z-index: 2;
+  color: #2ECC71;
+  font-size: 2em;
+}
+.profile-card-2 .view-more .fa-plus-circle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  width: 1.004em;
+}
+.profile-card-2 .view-more .fa-plus-circle:hover {
+  background: #2ECC71;
+  color: white;
+}
+.profile-card-2 .popup {
+  height: 500px;
+  width: 500px;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.profile-card-2 .mid-section {
+  position: absolute;
+  height: 200px;
+  width: 100%;
+  top: 200px;
+  left: 0;
+  padding: 10px 20px 0;
+  box-sizing: border-box;
+  background: white;
+}
+.profile-card-2 .mid-section .name {
+  color: #333333;
+  font-size: 1.4em;
+  padding-top: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  font-weight: bold;
+}
+.profile-card-2 .mid-section .description {
+  color: gray;
+  font-size: 0.9em;
+  padding-bottom: 5px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.profile-card-2 .mid-section .description a {
+  color: inherit;
+  text-decoration: none;
+  font-weight: bold;
+}
+.profile-card-2 .mid-section .line {
+  background: #7ee2a8;
+  width: 80%;
+  height: 2px;
+  margin: 5px auto -3px;
+}
+.profile-card-2 .mid-section .stats {
+  display: flex;
+  position: absolute;
+  left: 10%;
+  padding-top: 10px;
+  width: 80%;
+  justify-content: space-around;
+}
+.profile-card-2 .mid-section .stats .stat {
+  font-size: 1.3em;
+  color: #333333;
+  padding: 5px;
+  font-weight: bold;
+}
+.profile-card-2 .mid-section .stats .subtext {
+  color: gray;
+  font-size: 0.6em;
+  font-weight: normal;
+}
+.profile-card-2 .img {
+  height: 130px;
+  width: 100%;
+  background-image: linear-gradient(rgba(46, 204, 113, 0.4), rgba(46, 204, 113, 0.95)), url("https://static.pexels.com/photos/21014/pexels-photo-medium.jpg");
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+}
+.profile-card-2 .img img {
+  width: 160px;
+  height: 160px;
+  padding: 3px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  position: absolute;
+  left: calc(50% - 84px);
+  top: 26px;
+}
+.profile-card-2 .img:after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  left: calc(50% - 91.5px);
+  top: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+}
+.profile-card-2 .img:before {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  left: calc(50% - 95px);
+  top: 15.5px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+.profile-card-2 .links {
+  width: 100%;
+  height: 50px;
+  background: #F2F2F2;
+  border-top: 1px solid #44d581;
+  margin-top: 35px;
+  border-radius: 5px;
+  color: white;
+  font-size: 2em;
+  line-height: 1.5em;
+  position: absolute;
+  bottom: 0;
+}
+.profile-card-2 .links a {
+  color: white;
+}
+.profile-card-2 .links .fb {
+  position: absolute;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  background-color: #3b5998;
+}
+.profile-card-2 .links .fb:hover {
+  background-color: #4264aa;
+}
+.profile-card-2 .links .instagram {
+  position: absolute;
+  left: 25%;
+  width: 25%;
+  height: 100%;
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+.profile-card-2 .links .instagram:hover {
+  background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);
+}
+.profile-card-2 .links .github {
+  position: absolute;
+  left: 50%;
+  width: 25%;
+  height: 100%;
+  background-color:#333333;
+}
+.profile-card-2 .links .github:hover {
+  background-color:#333333;
+}
+
+.profile-card-2 .links .google {
+  position: absolute;
+  left: 75%;
+  width: 25%;
+  height: 100%;
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-color: whitesmoke;
+}
+.profile-card-2 .links .google:hover {
+  background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-color: whitesmoke;
+}

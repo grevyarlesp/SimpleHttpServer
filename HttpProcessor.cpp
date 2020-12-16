@@ -1,6 +1,5 @@
 #include "HttpProcessor.h"
 
-
 map<string, string> HttpProcessor::data;
 UserManager HttpProcessor::usm;
 FileType HttpProcessor::ft;
@@ -67,8 +66,6 @@ void HttpProcessor::process(char *msg, qint64 sz, string& response) {
         }
         pwd = reformated;
         cout << usr << ' ' << pwd << '\n';
-
-
         if (! usm.check(usr, pwd)) {
             response = HttpGenerator::htmlString(404, "./pages/404/index.html", "text/html");
         }
@@ -109,6 +106,13 @@ void HttpProcessor::process(char *msg, qint64 sz, string& response) {
             fm.generate(content, tmp);
             response = HttpGenerator::header(200, tmp.size(), "text/html");
             response += tmp;
+            return;
+        }
+        // Not a directory then ... 
+        int tmp = content.find('/');
+        if (content.substr(0, tmp) == "download") {
+            // To Transfer-Encoding Chunked
+            content = "./pages" + content;
             return;
         }
         content = "./pages" + content;

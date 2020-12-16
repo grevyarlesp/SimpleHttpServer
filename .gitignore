@@ -2,6 +2,8 @@
 .qmake.stash
 SimpleHttpServer
 *.pdf
+test.html
+./pages/download/*
 a
 test
 test.cpp
