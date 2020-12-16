@@ -104,11 +104,11 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
         framing(socket, location, fileInfo, tmp);
-        if (socket == NULL) ans += tmp;
+        /* if (socket == NULL) ans += tmp; */
     }
     writeChunk(socket, suffix);
-
-    ans = "0\r\n\r\n";
+    cout << suffix << '\n';
+    ans = "";
     writeChunk(socket, ans);
 
 }

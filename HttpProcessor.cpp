@@ -110,19 +110,23 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
         content = reformated;
         if (content == "/files.html") {
             fm.generate("download/", tmp, socket);
+
+            cout << "File view request - Transfer encoding chunked\n";
             response.clear();
             return;
         }
         if (content.back() == '/') {
             // You want a directory?
             // Send with transfer encoding
+
+            cout << "Directory view request - Transfer encoding chunked\n";
             fm.generate(content, tmp, socket);
             response.clear();
             return;
         }
         // Not a directory then ...
         int tmp = -1;
-        cout << content << '\n';
+        /* cout << content << '\n'; */
         for (int i = 1; i < (int) content.size(); ++i) {
             if (content[i] == '/') {
                 tmp = i;
@@ -151,7 +155,7 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             tmp2 = "0\r\n\r\n";
             /* cout << tmp2 << '\n'; */
             socket->write(tmp2.c_str(), (qint64) tmp2.size());
-            cout << "Download request\n";
+            cout << "Download request - Transfer encoding chunked\n";
             response.clear();
             return;
         }
