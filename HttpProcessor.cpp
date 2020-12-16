@@ -1,5 +1,6 @@
 #include "HttpProcessor.h"
 
+
 map<string, string> HttpProcessor::data;
 UserManager HttpProcessor::usm;
 FileType HttpProcessor::ft;
@@ -95,6 +96,21 @@ void HttpProcessor::process(char *msg, qint64 sz, string& response) {
             else reformated += content[i];
         }
         content = reformated;
+        if (content == "/files.html") {
+            string tmp;
+            fm.generate("download/", tmp);
+            response = HttpGenerator::header(200, tmp.size(), "text/html");
+            response += tmp;
+            return;
+        }
+        if (content.back() == '/') {
+            // You want a directory?
+            string tmp;
+            fm.generate(content, tmp);
+            response = HttpGenerator::header(200, tmp.size(), "text/html");
+            response += tmp;
+            return;
+        }
         content = "./pages" + content;
         response = HttpGenerator::htmlString(200, content, ft.getFileType(content));
     }

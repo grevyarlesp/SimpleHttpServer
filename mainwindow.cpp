@@ -14,7 +14,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         QMessageBox::critical(this,"QTCPServer",QString("Unable to start the server: %1.").arg(m_server->errorString()));
         exit(EXIT_FAILURE);
     }
-    FileManager fm("./pages/download/");
 }
 
 MainWindow::~MainWindow() {

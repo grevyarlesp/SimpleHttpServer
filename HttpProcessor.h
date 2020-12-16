@@ -8,6 +8,7 @@
 #include <cstring>
 #include <iostream>
 #include <string>
+#include "filemanager.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ using namespace std;
 
 class HttpProcessor {
     private: 
+        FileManager fm;
         static FileType ft;
         static map<string, string> data;
         static UserManager usm;

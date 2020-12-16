@@ -14,10 +14,9 @@ extern map<int, string> statusCode;
 
 class HttpGenerator {
     private:
-        static string header(int code, size_t contentSize, string type);
     public:
-
         /* Read and display html file */
+        static string header(int code, size_t contentSize, string type);
         static string htmlString(int code, string fileDir, string type);
         static string redirection(string location, string fileDir);
 };
