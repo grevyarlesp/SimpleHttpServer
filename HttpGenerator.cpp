@@ -5,10 +5,12 @@ map<int, string> statusCode = {
     {404, "Not found"},
 };
 
-string HttpGenerator::header(int code, size_t contentSize, string type) {
+string HttpGenerator::header(int code, size_t contentSize, string type, bool chunked) {
   string ans = "HTTP/1.1 " + to_string(code) + ' ' + statusCode[code] + '\n';
   ans.append("Content-Type: " + type + "\n");
-  ans.append("Content-Length: " + to_string(contentSize) + '\n');
+  if (! chunked)
+      ans.append("Content-Length: " + to_string(contentSize) + '\n');
+  else ans.append("Transfer-Encoding: chunked\n");
   ans.push_back('\n');
   return ans;
 }

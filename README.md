@@ -12,6 +12,10 @@ A simple http server, written as an exercise for my network class.
 
 - POST: Send data to the server.
 
+# TODO 
+
+- [ ] Reformatting code; Creating a new class for Socket handling.
+
 # References
 
 - https://www.w3.org/Protocols/rfc2616/rfc2616.html
@@ -19,3 +23,4 @@ A simple http server, written as an exercise for my network class.
 - https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 - https://medium.com/from-the-scratch/http-server-what-do-you-need-to-know-to-build-a-simple-http-server-from-scratch-d1ef8945e4fa
 - https://en.wikipedia.org/wiki/Favicon
+

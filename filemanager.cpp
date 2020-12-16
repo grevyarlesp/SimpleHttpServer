@@ -41,8 +41,29 @@ FileManager::FileManager() {
 
 }
 
+string FileManager::toHex(size_t s) {
+    string ans;
+    size_t tmp;
+    while (s) {
+        tmp = s % 16;
+        if (tmp > 9) {
+            ans = char(tmp - 10 + 'A') + ans;
+        } else ans = char(tmp + '0') + ans;
+        
+        s /= 16;
+    }
+    return ans;
+}
 
-void FileManager::framing(string &location, QFileInfo &info, string &ans) {
+
+void FileManager::writeChunk(QTcpSocket* socket, string& chunk) {
+    string tmp = toHex(chunk.size()) + "\r\n";
+    chunk = chunk + "\r\n";
+    socket->write(tmp.c_str(), qint64(tmp.size()));
+    socket->write(chunk.c_str(), qint64(chunk.size()));
+}
+
+void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans) {
     /* <tr> */
     /*     <td><a href="./08. Networking Media.pptx">8. Networking Media.pptx</a></td> */
     /*     <td align="center">12/16/2020</td> */
@@ -50,35 +71,46 @@ void FileManager::framing(string &location, QFileInfo &info, string &ans) {
     /*     <td>&nbsp;</td> */
     /* </tr> */
 
-    /* std::cout << qPrintable(QString("%1 %2 %3").arg(fileInfo.size(), 10) */
-    /*                                         .arg(fileInfo.fileName()).arg(fileInfo.lastModified().toString("ddd MMMM d yyyy hh:mm:ss"))); */
-    /* std::cout << std::endl; */
-
-    ans = "";
-    ans += "<tr>\n";
-    if (! info.isDir())
-        ans += "<td><a href=\"" + location  + info.fileName().toStdString() + "\">" + info.fileName().toStdString() + "</a></td>\n";
-    else 
-        ans += "<td><a href=\"" + location  + info.fileName().toStdString() + "/\">" + info.fileName().toStdString() + "</a></td>\n";
-    ans += "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>\n";
-    ans += "<td align=\"center\">" + QString::number(info.size()).toStdString() + " bytes </td>\n";
-    ans += "<td>&nbsp;</td>\n";
-    ans += "</tr>\n";
+    ans = "<tr>\n";
+    writeChunk(socket, ans);
+    if (! info.isDir()) {
+        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "\">" + info.fileName().toStdString() + "</a></td>\n";
+    }
+    else {
+        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "/\">" + info.fileName().toStdString() + "</a></td>\n";
+    }
+    writeChunk(socket, ans);
+    ans = "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>\n";
+    writeChunk(socket, ans);
+    ans = "<td align=\"center\">" + QString::number(info.size()).toStdString() + " bytes </td>\n";
+    writeChunk(socket, ans);
+    ans = "<td>&nbsp;</td>\n";
+    writeChunk(socket, ans);
+    ans = "</tr>\n";
+    writeChunk(socket, ans);
 }
 
-void FileManager::generate(string location, string &ans) {
+void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     QDir dir((root + location).c_str());
     dir.setFilter(QDir::Dirs | QDir::Files | QDir::Hidden | QDir::NoSymLinks);
     dir.setSorting(QDir::Name | QDir::Reversed);
     QFileInfoList list = dir.entryInfoList();
     /* std::cout << "     Bytes Filename" << std::endl; */
-    string tmp;
+
+    string tmp = HttpGenerator::header(200, 0, "text/html", 1);
     ans = prefix;
+    writeChunk(socket, tmp);
+    writeChunk(socket, prefix);
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
-        framing(location, fileInfo, tmp);
-        ans += tmp;
+        framing(socket, location, fileInfo, tmp);
+        if (socket == NULL) ans += tmp;
     }
+    writeChunk(socket, suffix);
+
+    ans = "0\r\n\r\n";
+    writeChunk(socket, ans);
+
 }
 
 void FileManager::writeHtmlTo(string dir, string htmlDir) {

@@ -4,7 +4,22 @@ map<string, string> HttpProcessor::data;
 UserManager HttpProcessor::usm;
 FileType HttpProcessor::ft;
 
-void HttpProcessor::process(char *msg, qint64 sz, string& response) {
+string HttpProcessor::toHex(size_t s) {
+    string ans;
+    size_t tmp;
+    while (s) {
+        tmp = s % 16;
+        if (tmp > 9) {
+            ans = char(tmp - 10 + 'A') + ans;
+        } else ans = char(tmp + '0') + ans;
+        
+        s /= 16;
+    }
+    return ans;
+}
+
+
+void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& response) {
     string request;
     string content;
     int i = 0;
@@ -94,25 +109,50 @@ void HttpProcessor::process(char *msg, qint64 sz, string& response) {
         }
         content = reformated;
         if (content == "/files.html") {
-            string tmp;
-            fm.generate("download/", tmp);
-            response = HttpGenerator::header(200, tmp.size(), "text/html");
-            response += tmp;
+            fm.generate("download/", tmp, socket);
+            response.clear();
             return;
         }
         if (content.back() == '/') {
             // You want a directory?
-            string tmp;
-            fm.generate(content, tmp);
-            response = HttpGenerator::header(200, tmp.size(), "text/html");
-            response += tmp;
+            // Send with transfer encoding
+            fm.generate(content, tmp, socket);
+            response.clear();
             return;
         }
-        // Not a directory then ... 
-        int tmp = content.find('/');
-        if (content.substr(0, tmp) == "download") {
+        // Not a directory then ...
+        int tmp = -1;
+        cout << content << '\n';
+        for (int i = 1; i < (int) content.size(); ++i) {
+            if (content[i] == '/') {
+                tmp = i;
+                break;
+            }
+        }
+        cout << tmp << '\n';
+        if (tmp != -1 && content.substr(0, tmp) == "/download") {
             // To Transfer-Encoding Chunked
             content = "./pages" + content;
+            response = HttpGenerator::header(200, -1, ft.getFileType(content), 1);
+            if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
+            /* cout << response; */
+            ifstream ifs(content);
+            string tmp, tmp2;
+            while (getline(ifs, tmp)) {
+                tmp.append("\n");
+                tmp2 = toHex(tmp.size()) + "\r\n";
+                socket->write(tmp2.c_str(), (qint64) tmp2.size());
+                /* cout << tmp2; */
+                tmp.append("\r\n");
+                /* cout << tmp; */
+                socket->write(tmp.c_str(), (qint64) tmp.size());
+            }
+            ifs.close();
+            tmp2 = "0\r\n\r\n";
+            /* cout << tmp2 << '\n'; */
+            socket->write(tmp2.c_str(), (qint64) tmp2.size());
+            cout << "Download request\n";
+            response.clear();
             return;
         }
         content = "./pages" + content;

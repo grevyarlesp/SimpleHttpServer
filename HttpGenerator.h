@@ -16,7 +16,7 @@ class HttpGenerator {
     private:
     public:
         /* Read and display html file */
-        static string header(int code, size_t contentSize, string type);
+        static string header(int code, size_t contentSize, string type, bool chunked = 0);
         static string htmlString(int code, string fileDir, string type);
         static string redirection(string location, string fileDir);
 };

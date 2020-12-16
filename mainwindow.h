@@ -38,7 +38,6 @@ private slots:
     void readSocket();
     void discardSocket();
     void displayMessage(const QString& str);
-
     void on_pushButton_sendMessage_clicked();
 
 private:

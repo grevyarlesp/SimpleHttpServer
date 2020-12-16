@@ -7,21 +7,25 @@
 #include <QDir>
 #include <QDirIterator>
 #include <QDateTime>
+#include <QTcpSocket>
+#include "HttpGenerator.h"
 
 using namespace std;
 
 class FileManager {
 private:
-  void framing(string &location, QFileInfo &info, string &ans);
-  QDir dir;
-  string location;
-  static string root;
+    string toHex(size_t s);
+    void writeChunk(QTcpSocket*socket, string &chunk);
+    void framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans);
+    QDir dir;
+    string location;
+    static string root;
 public:
     FileManager();
     static string prefix;
     static string suffix;
     /* Generate an HTML file */
-    void generate(string location, string &ans);
+    void generate(string location, string &ans, QTcpSocket *socket = NULL);
 
     /* Write the html file */
     void writeHtmlTo(string dir, string htmlDir);

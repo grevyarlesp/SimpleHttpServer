@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include "filemanager.h"
+#include <QTcpSocket>
 
 using namespace std;
 
@@ -16,12 +17,13 @@ using namespace std;
 
 class HttpProcessor {
     private: 
+        string toHex(size_t s);
         FileManager fm;
         static FileType ft;
         static map<string, string> data;
         static UserManager usm;
     public:
-        void process(char* msg, qint64 sz, string& response);
+        void process(QTcpSocket* socket, char* msg, qint64 sz, string& response);
 };
 
 #endif /* HTTPPROCESSOR_H */
