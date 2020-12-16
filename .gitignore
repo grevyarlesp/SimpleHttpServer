@@ -3,7 +3,7 @@
 SimpleHttpServer
 *.pdf
 test.html
-./pages/download/*
+*.pptx
 a
 test
 test.cpp
