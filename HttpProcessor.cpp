@@ -112,6 +112,9 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             fm.generate("download/", tmp, socket);
 
             cout << "File view request - Transfer encoding chunked\n";
+            /* content = "favicon.ico"; */
+            /* content = "./pages" + content; */
+            /* response = HttpGenerator::htmlString(200, content, ft.getFileType(content)); */
             response.clear();
             return;
         }
@@ -121,6 +124,10 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
 
             cout << "Directory view request - Transfer encoding chunked\n";
             fm.generate(content, tmp, socket);
+
+            /* content = "favicon.ico"; */
+            /* content = "./pages" + content; */
+            /* response = HttpGenerator::htmlString(200, content, ft.getFileType(content)); */
             response.clear();
             return;
         }

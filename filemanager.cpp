@@ -52,6 +52,7 @@ string FileManager::toHex(size_t s) {
         
         s /= 16;
     }
+    if (ans.empty()) ans = "0";
     return ans;
 }
 
@@ -59,6 +60,7 @@ string FileManager::toHex(size_t s) {
 void FileManager::writeChunk(QTcpSocket* socket, string& chunk) {
     string tmp = toHex(chunk.size()) + "\r\n";
     chunk = chunk + "\r\n";
+    cout << tmp << '\n';
     socket->write(tmp.c_str(), qint64(tmp.size()));
     socket->write(chunk.c_str(), qint64(chunk.size()));
 }
@@ -107,7 +109,8 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     }
     writeChunk(socket, suffix);
     /* cout << suffix << '\n'; */
-    ans = "";
+    cout << "== Ending ==";
+    ans.clear();
     writeChunk(socket, ans);
 
 }
