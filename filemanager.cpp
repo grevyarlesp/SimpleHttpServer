@@ -64,7 +64,7 @@ void FileManager::writeChunk(QTcpSocket* socket, string& chunk, bool header) {
     /* cout << tmp << '\n'; */
     socket->write(tmp.c_str(), qint64(tmp.size()));
     socket->write(chunk.c_str(), qint64(chunk.size()));
-    cout << tmp << chunk;
+    /* cout << tmp << chunk; */
 }
 
 void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans) {
