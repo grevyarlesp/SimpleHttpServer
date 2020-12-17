@@ -96,7 +96,6 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     dir.setSorting(QDir::Name | QDir::Reversed);
     QFileInfoList list = dir.entryInfoList();
     /* std::cout << "     Bytes Filename" << std::endl; */
-
     string tmp = HttpGenerator::header(200, 0, "text/html", 1);
     ans = prefix;
     writeChunk(socket, tmp);
@@ -107,7 +106,7 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
         /* if (socket == NULL) ans += tmp; */
     }
     writeChunk(socket, suffix);
-    cout << suffix << '\n';
+    /* cout << suffix << '\n'; */
     ans = "";
     writeChunk(socket, ans);
 
