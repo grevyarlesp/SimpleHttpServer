@@ -15,7 +15,7 @@ using namespace std;
 class FileManager {
 private:
     string toHex(size_t s);
-    void writeChunk(QTcpSocket*socket, string &chunk);
+    void writeChunk(QTcpSocket*socket, string &chunk, bool header=0);
     void framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans);
     QDir dir;
     string location;

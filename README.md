@@ -15,6 +15,7 @@ A simple http server, written as an exercise for my network class.
 # TODO 
 
 - [ ] Reformatting code; Creating a new class for Socket handling.
+- [ ] Redesigning the UI.
 
 # References
 

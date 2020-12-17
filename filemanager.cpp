@@ -57,12 +57,14 @@ string FileManager::toHex(size_t s) {
 }
 
 
-void FileManager::writeChunk(QTcpSocket* socket, string& chunk) {
+void FileManager::writeChunk(QTcpSocket* socket, string& chunk, bool header) {
     string tmp = toHex(chunk.size()) + "\r\n";
+    if (! header)
     chunk = chunk + "\r\n";
-    cout << tmp << '\n';
+    /* cout << tmp << '\n'; */
     socket->write(tmp.c_str(), qint64(tmp.size()));
     socket->write(chunk.c_str(), qint64(chunk.size()));
+    cout << tmp << chunk;
 }
 
 void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans) {
@@ -100,7 +102,7 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     /* std::cout << "     Bytes Filename" << std::endl; */
     string tmp = HttpGenerator::header(200, 0, "text/html", 1);
     ans = prefix;
-    writeChunk(socket, tmp);
+    writeChunk(socket, tmp, 1);
     writeChunk(socket, prefix);
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
@@ -109,7 +111,7 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     }
     writeChunk(socket, suffix);
     /* cout << suffix << '\n'; */
-    cout << "== Ending ==";
+    /* cout << "== Ending =="; */
     ans.clear();
     writeChunk(socket, ans);
 
