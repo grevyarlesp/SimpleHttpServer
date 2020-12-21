@@ -2,7 +2,7 @@
 
 map<int, string> statusCode = {
     {200, "OK"},
-    {404, "Not found"},
+    {404, "Not Found"},
 };
 
 string HttpGenerator::header(int code, size_t contentSize, string type, bool chunked) {
@@ -29,7 +29,7 @@ string HttpGenerator::htmlString(int code, string fileDir, string type) {
     while (getline(ifs, tmp)) {
       htmlContent += tmp + '\n';
     }
-    htmlContent.pop_back();
+    /* htmlContent.pop_back(); */
     /* std::string str((std::istreambuf_iterator<char>(ifs)), */
                  /* std::istreambuf_iterator<char>()); */
     ifs.close();

@@ -82,7 +82,7 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
         pwd = reformated;
         cout << usr << ' ' << pwd << '\n';
         if (! usm.check(usr, pwd)) {
-            response = HttpGenerator::htmlString(404, "./pages/404/index.html", "text/html");
+            response = HttpGenerator::htmlString(404, "./pages/404.html", "text/html");
         }
         else {
             response = HttpGenerator::redirection("/Information/index.html", "./pages/Information/index.html");
