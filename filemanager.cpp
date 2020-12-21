@@ -101,6 +101,7 @@ void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info,
     /*     <td align="center">3,071K</td> */
     /*     <td>&nbsp;</td> */
     /* </tr> */
+    if (info.fileName() == ".") return;
 
     ans = "<tr>\n";
     writeChunk(socket, ans);
@@ -111,9 +112,15 @@ void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info,
         ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "/\"><i class=\"fa fa-folder\"></i> " + info.fileName().toStdString() + "</a></td>";
     }
     writeChunk(socket, ans);
-    ans = "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>";
+    if (info.fileName() != "..")
+        ans = "<td align=\"center\">" + info.lastModified().toString("hh:mm:ss ddd MMMM d/yyyy").toStdString() + "</td>";
+    else 
+        ans = "<td align=\"center\"> --- </td>";
     writeChunk(socket, ans);
-    ans = "<td align=\"center\">" + to_string( double(info.size()) / 1000) + " KB </td>";
+    if (! info.isDir())
+        ans = "<td align=\"center\">" + to_string( double(info.size()) / 1000) + " KB </td>";
+    else 
+        ans = "<td align=\"center\"> --- </td>";
     writeChunk(socket, ans);
     ans = "<td>&nbsp;</td>";
     writeChunk(socket, ans);
