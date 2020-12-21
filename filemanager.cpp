@@ -5,7 +5,10 @@ string FileManager::root = "./pages/";
 string FileManager::prefix = 
 "<!DOCTYPE html>"
 "<html lang=\"en\">"
+"<meta content=\"text/html;charset=utf-8\" http-equiv=\"Content-Type\">"
+"<meta content=\"utf-8\" http-equiv=\"encoding\">"
 "<head>"
+ "<link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">"
     "<title>FILES</title>"
     "<body>"
         "<h1>Computer Network - Files</h1>"
@@ -37,8 +40,31 @@ string FileManager::suffix =
 "</head>"
 "</html>";
 
+map<string, string> FileManager::iconMap = {
+    {"txt", "fa fa-file-text"},
+    {"ppt", "fa fa-file-powerpoint-o"},
+    {"pptx", "fa fa-file-powerpoint-o"},
+    {"pdf", "fa fa-file-pdf-o"},
+    {"mp3", "fa fa-file-audio-o"},
+    {"jpg", "fa fa-file-photo-o"},
+    {"png", "fa fa-file-photo-o"},
+    {"mp4", "fa fa-file-video-o"},
+    {"mkv", "fa fa-file-video-o"},
+};
+
 FileManager::FileManager() {
 
+}
+
+string FileManager::fileIcon(string name) {
+    int i = name.size() - 1;
+    string ext;
+    for (; i >= 0 && name[i] != '.'; --i);
+    if (i == -1) return "fa fa-file";
+    ext = name.substr(i + 1);
+    ext = iconMap[ext];
+    if (ext == "") ext = "fa fa-file";
+    return ext;
 }
 
 string FileManager::toHex(size_t s) {
@@ -67,6 +93,7 @@ void FileManager::writeChunk(QTcpSocket* socket, string& chunk, bool header) {
     /* cout << tmp << chunk; */
 }
 
+
 void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info, string &ans) {
     /* <tr> */
     /*     <td><a href="./08. Networking Media.pptx">8. Networking Media.pptx</a></td> */
@@ -78,19 +105,19 @@ void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info,
     ans = "<tr>\n";
     writeChunk(socket, ans);
     if (! info.isDir()) {
-        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "\">" + info.fileName().toStdString() + "</a></td>\n";
+        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "\"><i class=\"" + fileIcon(info.fileName().toStdString()) + "\"></i> " + info.fileName().toStdString() + "</a></td>";
     }
     else {
-        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "/\">" + info.fileName().toStdString() + "</a></td>\n";
+        ans = "<td><a href=\"" + location  + info.fileName().toStdString() + "/\"><i class=\"fa fa-folder\"></i> " + info.fileName().toStdString() + "</a></td>";
     }
     writeChunk(socket, ans);
-    ans = "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>\n";
+    ans = "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>";
     writeChunk(socket, ans);
-    ans = "<td align=\"center\">" + QString::number(info.size()).toStdString() + " bytes </td>\n";
+    ans = "<td align=\"center\">" + QString::number(info.size()).toStdString() + " bytes </td>";
     writeChunk(socket, ans);
-    ans = "<td>&nbsp;</td>\n";
+    ans = "<td>&nbsp;</td>";
     writeChunk(socket, ans);
-    ans = "</tr>\n";
+    ans = "</tr>";
     writeChunk(socket, ans);
 }
 

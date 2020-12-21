@@ -145,6 +145,8 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             // To Transfer-Encoding Chunked
             content = "./pages" + content;
             response = HttpGenerator::header(200, -1, ft.getFileType(content), 1);
+            /* response.pop_back(); */
+            /* response += "Content-Disposition: attachment\r\n\n"; */
             if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
             /* cout << response; */
             ifstream ifs(content);
@@ -171,7 +173,6 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             tmp.append("\r\n");
             /* cout << tmp; */
             socket->write(tmp.c_str(), (qint64) tmp.size());
-
             ifs.close();
             tmp2 = "0\r\n\r\n";
             /* cout << tmp2 << '\n'; */
