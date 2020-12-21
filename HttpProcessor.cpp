@@ -166,6 +166,7 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             response.clear();
             return;
         }
+        cout << "Send files with Content-Length\n";
         content = "./pages" + content;
         response = HttpGenerator::htmlString(200, content, ft.getFileType(content));
     }
