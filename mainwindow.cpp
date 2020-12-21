@@ -70,7 +70,6 @@ void MainWindow::on_pushButton_sendMessage_clicked() {
     QString str = this->ui->lineEdit_message->text();
     str = str.trimmed();
     this->ui->lineEdit_message->clear();
-    QString tmp = QString("Sent %1 to ").arg(str);
 
     this->ui->lineEdit_message->clear();
 }

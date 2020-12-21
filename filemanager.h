@@ -4,7 +4,9 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+
 #include <QDir>
+#include <cmath>
 #include <QDirIterator>
 #include <map>
 #include <QDateTime>

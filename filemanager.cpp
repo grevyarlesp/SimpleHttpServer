@@ -113,7 +113,7 @@ void FileManager::framing(QTcpSocket* socket, string &location, QFileInfo &info,
     writeChunk(socket, ans);
     ans = "<td align=\"center\">" + info.lastModified().toString("ddd MMMM d yyyy hh:mm:ss").toStdString() + "</td>";
     writeChunk(socket, ans);
-    ans = "<td align=\"center\">" + QString::number(info.size()).toStdString() + " bytes </td>";
+    ans = "<td align=\"center\">" + to_string( double(info.size()) / 1000) + " KB </td>";
     writeChunk(socket, ans);
     ans = "<td>&nbsp;</td>";
     writeChunk(socket, ans);
