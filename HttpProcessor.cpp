@@ -148,16 +148,30 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
             /* cout << response; */
             ifstream ifs(content);
-            string tmp, tmp2;
-            while (getline(ifs, tmp)) {
-                tmp.append("\n");
+            string tmp, tmp2, tmp3;
+            bool first = true;
+            while (getline(ifs, tmp3)) {
+                if (first) {
+                    tmp = tmp3;
+                    first = false;
+                    continue;
+                }
+                tmp.push_back('\n');
                 tmp2 = toHex(tmp.size()) + "\r\n";
                 socket->write(tmp2.c_str(), (qint64) tmp2.size());
                 /* cout << tmp2; */
                 tmp.append("\r\n");
                 /* cout << tmp; */
                 socket->write(tmp.c_str(), (qint64) tmp.size());
+                tmp = tmp3;
             }
+            tmp2 = toHex(tmp.size()) + "\r\n";
+            socket->write(tmp2.c_str(), (qint64) tmp2.size());
+            /* cout << tmp2; */
+            tmp.append("\r\n");
+            /* cout << tmp; */
+            socket->write(tmp.c_str(), (qint64) tmp.size());
+
             ifs.close();
             tmp2 = "0\r\n\r\n";
             /* cout << tmp2 << '\n'; */

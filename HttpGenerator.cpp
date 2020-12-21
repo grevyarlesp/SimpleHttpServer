@@ -6,14 +6,14 @@ map<int, string> statusCode = {
 };
 
 string HttpGenerator::header(int code, size_t contentSize, string type, bool chunked) {
-    string ans = "HTTP/1.1 " + to_string(code) + ' ' + statusCode[code] + '\n';
+    string ans = "HTTP/1.1 " + to_string(code) + ' ' + statusCode[code] + "\r\n";
     /* ans.append("X-Content-Type-Options: nosniff\n"); */
-    ans.append("X-Content-Type-Options: nosniff\n");
-    ans.append("Content-Type: " + type + "\n");
+    ans.append("X-Content-Type-Options: nosniff\r\n");
+    ans.append("Content-Type: " + type + "\r\n");
     if (! chunked)
-        ans.append("Content-Length: " + to_string(contentSize) + '\n');
-    else ans.append("Transfer-Encoding: chunked\n");
-    ans.push_back('\n');
+        ans.append("Content-Length: " + to_string(contentSize) + "\r\n");
+    else ans.append("Transfer-Encoding: chunked\r\n");
+    ans.append("\r\n");
     return ans;
 }
 
@@ -27,11 +27,13 @@ string HttpGenerator::htmlString(int code, string fileDir, string type) {
         ifs.open("./pages/404.html", ios::in);
     }
     while (getline(ifs, tmp)) {
-        htmlContent += tmp + '\n';
+      htmlContent += tmp + '\n';
     }
-    ans += '\n';
+    htmlContent.pop_back();
+    /* std::string str((std::istreambuf_iterator<char>(ifs)), */
+                 /* std::istreambuf_iterator<char>()); */
     ifs.close();
-    ans = header(code, htmlContent.size(), type) + htmlContent + '\n';
+    ans = header(code, htmlContent.size(), type) + htmlContent;
     return ans;
 }
 
