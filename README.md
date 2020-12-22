@@ -14,6 +14,7 @@ A simple http server, written as an exercise for my network class.
 
 # TODO 
 
+- [ ] Add more mime types for video and audio files.
 - [ ] Reformatting code; Creating a new class for Socket handling.
 - [ ] Redesigning the UI.
 

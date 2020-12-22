@@ -951,6 +951,8 @@ map<string, string> FileType::types = {
     {"mp3", "audio/x-mpeg-3"},
     {"mp3", "video/mpeg"},
     {"mp3", "video/x-mpeg"},
+    {"mkv", "video/x-matroska"},
+    {"mp4", "video/mp4"},
     {"mpa", "audio/mpeg"},
     {"mpa", "video/mpeg"},
     {"mpc", "application/x-project"},
@@ -1292,7 +1294,8 @@ map<string, string> FileType::types = {
     {"zip", "application/zip"},
     {"zip", "multipart/x-zip"},
     {"zoo", "application/octet-stream"},
-    {"zsh", "text/x-script.zsh"}
+    {"zsh", "text/x-script.zsh"},
+    {"wmv", "video/x-ms-wmv"}
 };
 
 FileType::FileType() {}
