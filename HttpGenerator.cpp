@@ -20,15 +20,20 @@ string HttpGenerator::header(int code, size_t contentSize, string type, bool chu
 string HttpGenerator::htmlString(int code, string fileDir, string type) {
     ifstream ifs;
     ifs.open(fileDir);
-    string tmp, ans;
+    string ans;
     string htmlContent;
     if (! ifs) {
         code = 404;
         ifs.open("./pages/404.html", ios::in);
     }
-    while (getline(ifs, tmp)) {
-      htmlContent += tmp + '\n';
-    }
+    /* char c; */
+    /* while (ifs.get(c)) { */
+    /*   htmlContent += c; */
+    /* } */
+    ifs.seekg(0, ifs.end);
+    htmlContent.resize(ifs.tellg());
+    ifs.seekg(0, ifs.beg);
+    ifs.read(&htmlContent[0], htmlContent.size());
     /* htmlContent.pop_back(); */
     /* std::string str((std::istreambuf_iterator<char>(ifs)), */
                  /* std::istreambuf_iterator<char>()); */

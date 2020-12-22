@@ -150,29 +150,56 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
             /* cout << response; */
             ifstream ifs(content);
-            string tmp, tmp2, tmp3;
-            bool first = true;
-            while (getline(ifs, tmp3)) {
-                if (first) {
-                    tmp = tmp3;
-                    first = false;
-                    continue;
+            string tmp, tmp2;
+            char c;
+            /* string tmp, tmp2, tmp3; */
+            /* bool first = true; */
+            /* while (getline(ifs, tmp3)) { */
+            /*     if (first) { */
+            /*         tmp = tmp3; */
+            /*         first = false; */
+            /*         continue; */
+            /*     } */
+            /*     tmp.push_back('\n'); */
+            /*     tmp2 = toHex(tmp.size()) + "\r\n"; */
+            /*     socket->write(tmp2.c_str(), (qint64) tmp2.size()); */
+            /*     /1* cout << tmp2; *1/ */
+            /*     tmp.append("\r\n"); */
+            /*     /1* cout << tmp; *1/ */
+            /*     socket->write(tmp.c_str(), (qint64) tmp.size()); */
+            /*     tmp = tmp3; */
+            /* } */
+            /* tmp2 = toHex(tmp.size()) + "\r\n"; */
+            /* socket->write(tmp2.c_str(), (qint64) tmp2.size()); */
+            /* /1* cout << tmp2; *1/ */
+            /* tmp.append("\r\n"); */
+            /* /1* cout << tmp; *1/ */
+            /* socket->write(tmp.c_str(), (qint64) tmp.size()); */
+
+            /* Send 1KB at a time */
+            int counter = 0;
+            while (ifs.get(c)) {
+                ++counter;
+                tmp.push_back(c);
+                if (counter == 1024) {
+                    counter = 0;
+                    tmp2 = toHex(1024) + "\r\n";
+                    socket->write(tmp2.c_str(), (qint64) tmp2.size());
+                    /* cout << tmp2; */
+                    tmp.append("\r\n");
+                    /* cout << tmp; */
+                    socket->write(tmp.c_str(), (qint64) tmp.size());
+                    tmp.clear();
                 }
-                tmp.push_back('\n');
+            }
+            if (counter) {
                 tmp2 = toHex(tmp.size()) + "\r\n";
                 socket->write(tmp2.c_str(), (qint64) tmp2.size());
                 /* cout << tmp2; */
                 tmp.append("\r\n");
                 /* cout << tmp; */
                 socket->write(tmp.c_str(), (qint64) tmp.size());
-                tmp = tmp3;
             }
-            tmp2 = toHex(tmp.size()) + "\r\n";
-            socket->write(tmp2.c_str(), (qint64) tmp2.size());
-            /* cout << tmp2; */
-            tmp.append("\r\n");
-            /* cout << tmp; */
-            socket->write(tmp.c_str(), (qint64) tmp.size());
             ifs.close();
             tmp2 = "0\r\n\r\n";
             /* cout << tmp2 << '\n'; */

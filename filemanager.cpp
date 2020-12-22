@@ -148,7 +148,6 @@ void FileManager::generate(string location, string &ans, QTcpSocket *socket) {
     /* cout << "== Ending =="; */
     ans.clear();
     writeChunk(socket, ans);
-
 }
 
 void FileManager::writeHtmlTo(string dir, string htmlDir) {
