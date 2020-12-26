@@ -141,7 +141,8 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             }
         }
         cout << tmp << '\n';
-        if (tmp != -1 && content.substr(0, tmp) == "/download") {
+        bool mode = 1;
+        if (mode && tmp != -1 && content.substr(0, tmp) == "/download") {
             // To Transfer-Encoding Chunked
             content = "./pages" + content;
             response = HttpGenerator::header(200, -1, ft.getFileType(content), 1);
