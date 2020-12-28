@@ -14,7 +14,7 @@
    <string>Simple Http Server</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgba(37, 37, 37, 179);</string>
+   <string notr="true">background-color: rgba(255, 255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -44,7 +44,7 @@ padding: 5px;
     <item row="0" column="0" colspan="3">
      <widget class="QTextBrowser" name="textBrowser_receivedMessages">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 0, 0);</string>
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
      </widget>
     </item>
@@ -57,7 +57,7 @@ padding: 5px;
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(0, 0, 0);
+       <string notr="true">background-color: rgb(255, 255, 255);
 border-width: 2px;
 border-style: solid;
 border-color: rgb(69, 70, 70);
@@ -85,7 +85,14 @@ border-radius: 10px;</string>
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

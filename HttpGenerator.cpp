@@ -7,6 +7,9 @@ map<int, string> statusCode = {
 
 string HttpGenerator::header(int code, size_t contentSize, string type, bool chunked) {
     string ans = "HTTP/1.1 " + to_string(code) + ' ' + statusCode[code] + "\r\n";
+    if (code == 404) {
+        ans.append("Location: /404.html\r\n");
+    }
     /* ans.append("X-Content-Type-Options: nosniff\n"); */
     ans.append("X-Content-Type-Options: nosniff\r\n");
     ans.append("Content-Type: " + type + "\r\n");

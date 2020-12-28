@@ -40,7 +40,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(442, 337);
-        MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgba(37, 37, 37, 179);"));
+        MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgba(255, 255, 255, 255);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -63,14 +63,14 @@ public:
 
         textBrowser_receivedMessages = new QTextBrowser(centralWidget);
         textBrowser_receivedMessages->setObjectName(QString::fromUtf8("textBrowser_receivedMessages"));
-        textBrowser_receivedMessages->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);"));
+        textBrowser_receivedMessages->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
 
         gridLayout->addWidget(textBrowser_receivedMessages, 0, 0, 1, 3);
 
         lineEdit_message = new QLineEdit(centralWidget);
         lineEdit_message->setObjectName(QString::fromUtf8("lineEdit_message"));
         lineEdit_message->setMinimumSize(QSize(150, 0));
-        lineEdit_message->setStyleSheet(QString::fromUtf8("background-color: rgb(0, 0, 0);\n"
+        lineEdit_message->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);\n"
 "border-width: 2px;\n"
 "border-style: solid;\n"
 "border-color: rgb(69, 70, 70);\n"
@@ -88,6 +88,10 @@ public:
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
+        QFont font;
+        font.setBold(true);
+        font.setWeight(75);
+        statusBar->setFont(font);
         MainWindow->setStatusBar(statusBar);
 
         retranslateUi(MainWindow);

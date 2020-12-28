@@ -148,36 +148,22 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             response = HttpGenerator::header(200, -1, ft.getFileType(content), 1);
             /* response.pop_back(); */
             /* response += "Content-Disposition: attachment\r\n\n"; */
-            if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
             /* cout << response; */
             ifstream ifs(content);
+            if (! ifs) { // 404 Coming
+                cout << "404, File not found\n";
+                content = "./pages/404.html";
+                /* cout << data["Referer"] << '\n'; */
+                response = HttpGenerator::htmlString(404, content, ft.getFileType(content));
+                ifs.close();
+                return;
+            }
             string tmp, tmp2;
             char c;
-            /* string tmp, tmp2, tmp3; */
-            /* bool first = true; */
-            /* while (getline(ifs, tmp3)) { */
-            /*     if (first) { */
-            /*         tmp = tmp3; */
-            /*         first = false; */
-            /*         continue; */
-            /*     } */
-            /*     tmp.push_back('\n'); */
-            /*     tmp2 = toHex(tmp.size()) + "\r\n"; */
-            /*     socket->write(tmp2.c_str(), (qint64) tmp2.size()); */
-            /*     /1* cout << tmp2; *1/ */
-            /*     tmp.append("\r\n"); */
-            /*     /1* cout << tmp; *1/ */
-            /*     socket->write(tmp.c_str(), (qint64) tmp.size()); */
-            /*     tmp = tmp3; */
-            /* } */
-            /* tmp2 = toHex(tmp.size()) + "\r\n"; */
-            /* socket->write(tmp2.c_str(), (qint64) tmp2.size()); */
-            /* /1* cout << tmp2; *1/ */
-            /* tmp.append("\r\n"); */
-            /* /1* cout << tmp; *1/ */
-            /* socket->write(tmp.c_str(), (qint64) tmp.size()); */
 
             /* Send 1KB at a time */
+
+            if (socket->isOpen()) socket->write(response.c_str(), (qint64) response.size());
             int counter = 0;
             while (ifs.get(c)) {
                 ++counter;
@@ -208,10 +194,11 @@ void HttpProcessor::process(QTcpSocket* socket, char *msg, qint64 sz, string& re
             cout << "Download request - Transfer encoding chunked\n";
             response.clear();
             return;
+        } else {
+            cout << "Send files with Content-Length\n";
+            content = "./pages" + content;
+            response = HttpGenerator::htmlString(200, content, ft.getFileType(content));
         }
-        cout << "Send files with Content-Length\n";
-        content = "./pages" + content;
-        response = HttpGenerator::htmlString(200, content, ft.getFileType(content));
     }
 }
 
